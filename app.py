@@ -10,7 +10,7 @@ app = Flask(__name__)
 # app.secret_key = os.environ.get("SESSION_SECRET", "dev-secret-key-change-in-production")
 
 # Import routes after app creation to avoid circular imports
-from routes import *
+from index import *
 
 if __name__ == '__main__':
     app.run()
