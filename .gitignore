@@ -1,0 +1,5 @@
+.env
+/env
+ollama_stream.py
+conversations
+venv
