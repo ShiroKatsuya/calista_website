@@ -4,6 +4,4 @@ langchain_ollama
 langgraph
 langchain_google_genai
 langchain_community
-torch
-torchvision
-torchaudio
+bs4

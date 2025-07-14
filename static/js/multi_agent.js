@@ -16,6 +16,10 @@ $(document).ready(function() {
 
     // Function to add a chunk to an existing streaming message or create a new one
     function addMessageChunk(text, sender) {
+        // Suppress any message containing ROUTE_TO:
+        if (typeof text === 'string' && text.includes('ROUTE_TO:')) {
+            return;
+        }
         console.log(`Adding chunk: [${sender}] ${text.substring(0, 50)}...`);
         
         // Check if we have an existing streaming message for this sender
@@ -39,8 +43,8 @@ $(document).ready(function() {
             // Apply sender-specific Tailwind classes and margin
             if (sender === 'user') {
                 $messageDiv.addClass('bg-blue-600 text-white ml-auto rounded-br-none').css('max-width', '80%');
-            } else if (sender == 'ai') {
-                $messageDiv.addClass('bg-gray-700 text-gray-100 mr-auto rounded-bl-none').css('max-width', '80%');
+            // } else if (sender == 'ai') {
+            //     $messageDiv.addClass('bg-gray-700 text-gray-100 mr-auto rounded-bl-none').css('max-width', '80%');
             } else if (sender === 'supervisor') {
                 $messageDiv.addClass('bg-purple-800 text-white mr-auto rounded-bl-none').css('max-width', '80%');
             } else if (sender === 'system-error') {
@@ -91,6 +95,10 @@ $(document).ready(function() {
 
     // Function to add a regular message to the conversation
     function addMessage(text, sender) {
+        // Suppress any message containing ROUTE_TO:
+        if (typeof text === 'string' && text.includes('ROUTE_TO:')) {
+            return;
+        }
         console.log(`Adding message: [${sender}] ${text.substring(0, 50)}...`);
         
         // Clear current streaming message if it's from the same sender
@@ -106,8 +114,8 @@ $(document).ready(function() {
         // Apply sender-specific Tailwind classes and margin
         if (sender === 'user') {
             $messageDiv.addClass('bg-blue-600 text-white ml-auto rounded-br-none').css('max-width', '80%');
-        } else if (sender == 'ai') {
-            $messageDiv.addClass('bg-gray-700 text-gray-100 mr-auto rounded-bl-none').css('max-width', '80%');
+        // } else if (sender == 'ai') {
+        //     $messageDiv.addClass('bg-gray-700 text-gray-100 mr-auto rounded-bl-none').css('max-width', '80%');
     
         } else if (sender === 'supervisor') {
             $messageDiv.addClass('bg-purple-800 text-white mr-auto rounded-bl-none').css('max-width', '80%');
@@ -156,6 +164,9 @@ $(document).ready(function() {
 
     // Function to add a system message (like routing or start/end signals)
     function addSystemMessage(text) {
+        // Remove any existing system-message divs to ensure only one is shown
+        $responseContainer.find('.system-message').remove();
+
         const $systemMessageDiv = $('<div>').addClass('system-message text-center text-gray-400 text-sm my-3');
         $systemMessageDiv.text(text);
         $responseContainer.append($systemMessageDiv);
@@ -349,6 +360,9 @@ $(document).ready(function() {
                                 } catch (e) {
                                     console.error('Error parsing JSON from stream:', e, 'Line:', line);
                                     // Fallback for non-JSON data, append as plain text to a generic AI message
+                                    if (line.substring(6).includes('ROUTE_TO:')) {
+                                        return;
+                                    }
                                     addMessage(line.substring(6), 'ai');
                                 }
                             } else if (line.startsWith('event: end_stream')) {

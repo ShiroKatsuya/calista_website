@@ -195,7 +195,7 @@ def chat_stream():
                                     full_content += chunk
                                     yield f"data: {json.dumps({'sender': 'Alice', 'content': chunk, 'type': 'chunk'})}\n\n"
                             # After streaming all chunks, send a complete message (optional, but good for clarity)
-                            yield f"data: {json.dumps({'sender': 'Alice', 'content': full_content, 'type': 'complete'})}\n\n"
+                            # yield f"data: {json.dumps({'sender': 'Alice', 'content': full_content, 'type': 'complete'})}\n\n"
                         except Exception as e:
                             print(f"[DEBUG] Alice tool execution failed: {str(e)}")
                             # Fallback to simple agent with streaming
@@ -208,7 +208,7 @@ def chat_stream():
                                     full_content += chunk
                                     yield f"data: {json.dumps({'sender': 'Alice', 'content': chunk, 'type': 'chunk'})}\n\n"
                             # Send complete message
-                            yield f"data: {json.dumps({'sender': 'Alice', 'content': full_content, 'type': 'complete'})}\n\n"
+                            # yield f"data: {json.dumps({'sender': 'Alice', 'content': full_content, 'type': 'complete'})}\n\n"
                     else:
                         print("[DEBUG] Alice using simple streaming")
                         # Use simple agent with streaming
@@ -224,7 +224,7 @@ def chat_stream():
                                 yield f"data: {json.dumps({'sender': 'Alice', 'content': chunk, 'type': 'chunk'})}\n\n"
                         print(f"[DEBUG] Alice streamed {chunk_count} chunks, total length: {len(full_content)}")
                         # Send complete message
-                        yield f"data: {json.dumps({'sender': 'Alice', 'content': full_content, 'type': 'complete'})}\n\n"
+                        # yield f"data: {json.dumps({'sender': 'Alice', 'content': full_content, 'type': 'complete'})}\n\n"
                 
                 elif current_agent == "Bob":
                     print(f"[DEBUG] Bob starting response for question: {current_question[:50]}...")
@@ -243,7 +243,7 @@ def chat_stream():
                                     full_content += chunk
                                     yield f"data: {json.dumps({'sender': 'Bob', 'content': chunk, 'type': 'chunk'})}\n\n"
                             # After streaming all chunks, send a complete message (optional, but good for clarity)
-                            yield f"data: {json.dumps({'sender': 'Bob', 'content': full_content, 'type': 'complete'})}\n\n"
+                            # yield f"data: {json.dumps({'sender': 'Bob', 'content': full_content, 'type': 'complete'})}\n\n"
                         except Exception as e:
                             print(f"[DEBUG] Bob tool execution failed: {str(e)}")
                             # Fallback to simple agent with streaming
@@ -256,7 +256,7 @@ def chat_stream():
                                     full_content += chunk
                                     yield f"data: {json.dumps({'sender': 'Bob', 'content': chunk, 'type': 'chunk'})}\n\n"
                             # Send complete message
-                            yield f"data: {json.dumps({'sender': 'Bob', 'content': full_content, 'type': 'complete'})}\n\n"
+                            # yield f"data: {json.dumps({'sender': 'Bob', 'content': full_content, 'type': 'complete'})}\n\n"
                     else:
                         print("[DEBUG] Bob using simple streaming")
                         # Use simple agent with streaming
@@ -272,7 +272,7 @@ def chat_stream():
                                 yield f"data: {json.dumps({'sender': 'Bob', 'content': chunk, 'type': 'chunk'})}\n\n"
                         print(f"[DEBUG] Bob streamed {chunk_count} chunks, total length: {len(full_content)}")
                         # Send complete message
-                        yield f"data: {json.dumps({'sender': 'Bob', 'content': full_content, 'type': 'complete'})}\n\n"
+                        # yield f"data: {json.dumps({'sender': 'Bob', 'content': full_content, 'type': 'complete'})}\n\n"
                 
                 # Add agent response to conversation
                 agent_message = AIMessage(content=full_content, name=current_agent)
