@@ -13,6 +13,8 @@ from flask import Flask
 
 app = Flask(__name__)
 
+app.secret_key = os.environ.get("SESSION_SECRET", "dev-secret-key-change-in-production")
+
 @app.route('/')
 def index():
     """Main page route that renders the search interface"""
